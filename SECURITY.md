@@ -3,16 +3,9 @@
 ## Supported Versions
 
 | Version | Stage       | Environment      | Supported Until |
-| ------- | ----------- | ---------------- | --------------- |
+|---------| ----------- | ---------------- | --------------- |
 | 0.x.x   | Development | Internal Testing | not supported   |
-| 1.1.x   | Development | Internal Testing | not supported   |
-| 1.2.x   | Development | Internal Testing | not supported   |
-| 1.3.x   | Development | Internal Testing | not supported   |
-| 1.4.x   | Development | Internal Testing | not supported   |
-| 1.5.x   | Development | Internal Testing | not supported   |
-| 1.6.x   | Development | Internal Testing | not supported   |
-| 1.7.x   | Development | Internal Testing | not supported   |
-| 1.8.x   | Stable      | Production       | TBD             |
+| 1.0.x   | Stable      | Production       | TBD             |
 
 - Development: Used for features under development; not recommended for production.
 - Stable: Deployed to production for all users.
@@ -31,8 +24,7 @@ We handle vulnerabilities related to the following:
 
 ## Reporting a Vulnerability
 
-To report a vulnerability, please email **milen.karaganski@proton.me**. This email is exclusively for security-related
-reports. The first reply will be within 24 hours.
+To report a vulnerability, please email **info@minkov.dev**. The first reply will be within 24 hours.
 
 Expected time to fix any reported vulnerability:
 
