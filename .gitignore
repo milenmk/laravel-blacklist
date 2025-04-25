@@ -1,0 +1,14 @@
+/node_modules
+/vendor
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/auth.json
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+composer.lock
+package-lock.json
