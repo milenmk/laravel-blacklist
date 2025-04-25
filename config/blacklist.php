@@ -1,0 +1,88 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | Blacklist
+    |--------------------------------------------------------------------------
+    |
+    | This array contains words that should be blacklisted when validating
+    | user input. Any field containing these words will be rejected.
+    |
+    */
+    'blacklist' => [
+        'system',
+        'god',
+        'super',
+        'abuse',
+        'account',
+        'adm',
+        'admin',
+        'admins',
+        'administrator',
+        'administrators',
+        'all',
+        'ceo',
+        'cfo',
+        'contact',
+        'coo',
+        'customer',
+        'document',
+        'download',
+        'faq',
+        'file',
+        'files',
+        'ftp',
+        'help',
+        'home',
+        'host',
+        'http',
+        'https',
+        'imap',
+        'info',
+        'ldap',
+        'list',
+        'majordomo',
+        'manager',
+        'marketing',
+        'master',
+        'member',
+        'membership',
+        'mis',
+        'news',
+        'noreply',
+        'office',
+        'owner',
+        'password',
+        'pop',
+        'postfix',
+        'postmaster',
+        'register',
+        'registration',
+        'root',
+        'sales',
+        'secure',
+        'security',
+        'sftp',
+        'shop',
+        'smtp',
+        'ssl',
+        'support',
+        'sysadmin',
+        'system',
+        'test',
+        'trouble',
+        'usenet',
+        'user',
+        'web',
+        'webserver',
+        'wheel',
+        'vww',
+        'wvw',
+        'wwv',
+        'www',
+        'www-data',
+    ],
+];
