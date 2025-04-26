@@ -18,7 +18,8 @@ class BlacklistService
      */
     public function checkFields(array $fields, ?string $logChannel = null): array
     {
-        $blacklist = Config::get('blacklist.blacklist', []);
+        $mode = Config::get('blacklist.mode', 'blacklist');
+        $terms = $this->getTermsBasedOnMode($mode);
         $errors = [];
 
         foreach ($fields as $fieldName => $fieldValue) {
@@ -26,11 +27,12 @@ class BlacklistService
                 continue;
             }
 
-            foreach ($blacklist as $blacklistedTerm) {
-                if (stripos($fieldValue, $blacklistedTerm) !== false) {
-                    $errors[$fieldName] = "The {$fieldName} contains a blacklisted word: {$blacklistedTerm}";
+            foreach ($terms as $term) {
+                if (stripos($fieldValue, $term) !== false) {
+                    $listType = $this->getListTypeForTerm($term, $mode);
+                    $errors[$fieldName] = "The $fieldName contains a $listType word: $term";
 
-                    $this->logBlacklistMatch($fieldName, $blacklistedTerm, $logChannel);
+                    $this->logBlacklistMatch($fieldName, $term, $listType, $logChannel);
 
                     // Break the inner loop once we find a match for this field
                     break;
@@ -42,15 +44,61 @@ class BlacklistService
     }
 
     /**
+     * Get the terms to check based on the configured mode.
+     *
+     * @param  string  $mode  The blacklist mode ('blacklist', 'profanity', or 'both')
+     * @return array<string> Array of terms to check
+     */
+    protected function getTermsBasedOnMode(string $mode): array
+    {
+        $terms = [];
+
+        if ($mode === 'blacklist' || $mode === 'both') {
+            $terms = array_merge($terms, Config::get('blacklist.blacklist', []));
+        }
+
+        if ($mode === 'profanity' || $mode === 'both') {
+            $terms = array_merge($terms, Config::get('blacklist.profanity', []));
+        }
+
+        return $terms;
+    }
+
+    /**
+     * Determine which list a term belongs to.
+     *
+     * @param  string  $term  The term that was matched
+     * @param  string  $mode  The current mode
+     * @return string The type of list ('blacklisted' or 'profanity')
+     */
+    protected function getListTypeForTerm(string $term, string $mode): string
+    {
+        // If we're only using one list, we already know the type
+        if ($mode === 'blacklist') {
+            return 'blacklisted';
+        }
+
+        if ($mode === 'profanity') {
+            return 'profanity';
+        }
+
+        // For 'both' mode, we need to check which list the term is in
+        $blacklist = Config::get('blacklist.blacklist', []);
+
+        return in_array($term, $blacklist) ? 'blacklisted' : 'profanity';
+    }
+
+    /**
      * Log a blacklist match.
      *
      * @param  string  $fieldName  The name of the field that matched
-     * @param  string  $blacklistedTerm  The blacklisted term that was matched
+     * @param  string  $term  The term that was matched
+     * @param  string  $listType  The type of list the term was found in ('blacklisted' or 'profanity')
      * @param  string|null  $channel  The log channel to use
      */
-    protected function logBlacklistMatch(string $fieldName, string $blacklistedTerm, ?string $channel = null): void
+    protected function logBlacklistMatch(string $fieldName, string $term, string $listType, ?string $channel = null): void
     {
-        $message = "An attempt to use {$fieldName} containing a blacklisted word: {{$blacklistedTerm}} detected";
+        $message = "An attempt to use $fieldName containing a $listType word: {{$term}} detected";
 
         if ($channel) {
             Log::channel($channel)->warning($message);

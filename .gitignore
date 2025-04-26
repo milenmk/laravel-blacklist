@@ -12,3 +12,5 @@ yarn-error.log
 /.zed
 composer.lock
 package-lock.json
+.phpunit.result.cache
+.phpunit.cache

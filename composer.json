@@ -1,44 +1,52 @@
 {
-    "name": "milenmk/laravel-blacklist",
-    "description": "A Laravel package for blacklist validation of user input",
-    "version": "1.0.0",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Milen Karaganski",
-            "email": "milenmk@gmail.com"
-        }
-    ],
-    "repository": [
-        {
-            "type": "git",
-            "url": ""
-        }
-    ],
-    "require": {
-        "php": "^8.0",
-        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0"
-    },
-    "require-dev": {
-        "laravel/pint": "^1.13",
-        "squizlabs/php_codesniffer": "^3.11",
-        "tightenco/duster": "^3.1"
-    },
-    "conflict": {
-        "laravel/framework": "<8.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Milenmk\\LaravelBlacklist\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Milenmk\\LaravelBlacklist\\BlacklistServiceProvider"
-            ]
-        }
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+  "name": "milenmk/laravel-blacklist",
+  "description": "A Laravel package for blacklist validation of user input",
+  "version": "1.1.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Milen Karaganski",
+      "email": "milenmk@gmail.com"
+    }
+  ],
+  "repository": [
+    {
+      "type": "git",
+      "url": ""
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.13",
+    "squizlabs/php_codesniffer": "^3.11",
+    "tightenco/duster": "^3.1",
+    "phpunit/phpunit": "^12.1",
+    "brianium/paratest": "^7.9",
+    "orchestra/testbench": "^10.2"
+  },
+  "conflict": {
+    "laravel/framework": "<8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Milenmk\\LaravelBlacklist\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Milenmk\\LaravelBlacklist\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Milenmk\\LaravelBlacklist\\BlacklistServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }
