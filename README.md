@@ -13,7 +13,7 @@ composer require milenmk/laravel-blacklist
 
 ## Configuration
 
-Publish the config file:
+The package works out of the box with default settings, but you can customize it by publishing the config file:
 
 ```copy
 php artisan vendor:publish --tag=blacklist-config
@@ -23,6 +23,8 @@ This will create a `config/blacklist.php` file where you can:
 
 1. Choose which word lists to use (system blacklist, profanity, or both)
 2. Customize the blacklisted terms in each list
+
+> **Note:** If you don't publish the config file, the package will use the default configuration with the 'blacklist' mode enabled.
 
 ### Configuration Options
 

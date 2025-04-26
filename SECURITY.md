@@ -3,9 +3,10 @@
 ## Supported Versions
 
 | Version | Stage       | Environment      | Supported Until |
-|---------| ----------- | ---------------- | --------------- |
-| 0.x.x   | Development | Internal Testing | not supported   |
-| 1.0.x   | Stable      | Production       | TBD             |
+|---------|-------------|------------------|-----------------|
+| 1.0.x   | Development | Internal Testing | not supported   |
+| 1.1.x   | Development | Internal Testing | not supported   |
+| 1.2.x   | Stable      | Production       | TBD             |
 
 - Development: Used for features under development; not recommended for production.
 - Stable: Deployed to production for all users.

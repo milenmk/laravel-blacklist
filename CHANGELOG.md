@@ -2,7 +2,8 @@
 
 #### Published at: 2025-04-26
 
-- Improved word matching to use whole word boundaries instead of substring matching
+- **IMPORTANT**: Improved word matching to use whole word boundaries instead of substring matching (prevents false
+  positives)
 - Fixed tests to properly validate whole word matching
 - Updated log message format for better clarity
 - Fixed risky tests by adding explicit assertions
