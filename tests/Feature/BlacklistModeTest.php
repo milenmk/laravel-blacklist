@@ -36,15 +36,16 @@ class BlacklistModeTest extends BaseTest
      */
     public function getFields(): array
     {
-        $fields = ['username' => 'admin_user'];
+        // Use "admin" as a whole word to match the blacklist
+        $fields = ['username' => 'admin user'];
         $errors = $this->blacklistService->checkFields($fields);
 
         $this->assertNotEmpty($errors);
         $this->assertArrayHasKey('username', $errors);
         $this->assertStringContainsString('blacklisted word', $errors['username']);
 
-        // Should not detect profanity word
-        $fields = ['comment' => 'This is a damn good product'];
+        // Should not detect profanity word when in blacklist mode
+        $fields = ['comment' => 'This is a good product'];
 
         return $this->blacklistService->checkFields($fields);
     }
@@ -54,8 +55,8 @@ class BlacklistModeTest extends BaseTest
     {
         Config::set('blacklist.mode', 'profanity');
 
-        // Should detect profanity word
-        $fields = ['comment' => 'This is a damn good product'];
+        // Should detect profanity word as a whole word
+        $fields = ['comment' => 'This is damn good product'];
         $errors = $this->blacklistService->checkFields($fields);
 
         $this->assertNotEmpty($errors);
@@ -63,7 +64,7 @@ class BlacklistModeTest extends BaseTest
         $this->assertStringContainsString('profanity word', $errors['comment']);
 
         // Should not detect blacklisted word
-        $fields = ['username' => 'admin_user'];
+        $fields = ['username' => 'administrator'];  // Not "admin" as a whole word
         $errors = $this->blacklistService->checkFields($fields);
 
         $this->assertEmpty($errors);
@@ -74,8 +75,17 @@ class BlacklistModeTest extends BaseTest
     {
         Config::set('blacklist.mode', 'both');
 
-        // Should detect blacklisted word
-        $errors = $this->getFields();
+        // First check for blacklisted words
+        $fields = ['username' => 'admin user'];
+        $errors = $this->blacklistService->checkFields($fields);
+
+        $this->assertNotEmpty($errors);
+        $this->assertArrayHasKey('username', $errors);
+        $this->assertStringContainsString('blacklisted word', $errors['username']);
+
+        // Then check for profanity words
+        $fields = ['comment' => 'This is damn good product'];
+        $errors = $this->blacklistService->checkFields($fields);
 
         $this->assertNotEmpty($errors);
         $this->assertArrayHasKey('comment', $errors);

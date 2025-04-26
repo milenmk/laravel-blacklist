@@ -1,6 +1,15 @@
+## v1.2.0
+
+#### Published at: 2025-04-26
+
+- Improved word matching to use whole word boundaries instead of substring matching
+- Fixed tests to properly validate whole word matching
+- Updated log message format for better clarity
+- Fixed risky tests by adding explicit assertions
+
 ## v1.1.0
 
-#### Published at: [Current Date]
+#### Published at: 2025-04-26
 
 - Added new profanity/offensive words list
 - Added configuration option to choose which word lists to use (blacklist, profanity, or both)
@@ -9,6 +18,6 @@
 
 ## v1.0.0
 
-#### Published at: 2024-04-26
+#### Published at: 2025-04-26
 
 - Initial release

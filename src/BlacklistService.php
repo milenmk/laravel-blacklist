@@ -28,7 +28,8 @@ class BlacklistService
             }
 
             foreach ($terms as $term) {
-                if (stripos($fieldValue, $term) !== false) {
+                // Check for whole word match using word boundaries in regex
+                if (preg_match('/\b' . preg_quote($term, '/') . '\b/i', $fieldValue)) {
                     $listType = $this->getListTypeForTerm($term, $mode);
                     $errors[$fieldName] = "The $fieldName contains a $listType word: $term";
 
@@ -98,7 +99,7 @@ class BlacklistService
      */
     protected function logBlacklistMatch(string $fieldName, string $term, string $listType, ?string $channel = null): void
     {
-        $message = "An attempt to use $fieldName containing a $listType word: {{$term}} detected";
+        $message = "An attempt to use $fieldName containing the $listType word: \"$term\" detected";
 
         if ($channel) {
             Log::channel($channel)->warning($message);

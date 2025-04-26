@@ -1,7 +1,7 @@
 # Laravel Blacklist
 
 A Laravel package for blacklist validation of user input. Includes both system blacklist words and profanity/offensive
-terms, with the flexibility to choose which lists to use.
+terms, with the flexibility to choose which lists to use. Uses whole word matching to prevent false positives.
 
 ## Installation
 
@@ -111,8 +111,16 @@ You can change the filtering mode in your config file:
 
 The error messages will indicate which list the matched term belongs to:
 
-- "The {field} contains a blacklisted word: {term}"
-- "The {field} contains a profanity word: {term}"
+- "The {field} contains the blacklisted word: "{term}""
+- "The {field} contains the profanity word: "{term}""
+
+### Word Matching
+
+This package uses whole word boundary matching to prevent false positives. For example:
+- "admin" will match in "admin user" but not in "administrator" or "badminton"
+- "damn" will match in "that's damn good" but not in "condamnation"
+
+This ensures that legitimate content isn't incorrectly flagged while still catching problematic terms.
 
 ## License
 
