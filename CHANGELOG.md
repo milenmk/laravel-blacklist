@@ -1,3 +1,10 @@
+## v1.2.1
+
+#### Published at: 2025-08-09
+
+- Updated readme file
+- More bad words added
+
 ## v1.2.0
 
 #### Published at: 2025-04-26

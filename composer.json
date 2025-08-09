@@ -1,7 +1,7 @@
 {
   "name": "milenmk/laravel-blacklist",
   "description": "A Laravel package for blacklist validation of user input",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "license": "MIT",
   "authors": [
     {

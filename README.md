@@ -1,7 +1,30 @@
 # Laravel Blacklist
 
-A Laravel package for blacklist validation of user input. Includes both system blacklist words and profanity/offensive
-terms, with the flexibility to choose which lists to use. Uses whole word matching to prevent false positives.
+Laravel Blacklist: A robust content filtering solution for Laravel applications that provides comprehensive validation
+against unwanted user input. This package offers dual-layer protection with both system blacklist words (preventing
+username squatting and system impersonation) and profanity/offensive terms filtering.
+
+## Key features:
+
+- Intelligent word boundary matching to prevent false positives while catching problematic content
+- Flexible filtering modes: use system blacklist only, profanity filtering only, or both simultaneously
+- Customizable word lists that can be easily extended or modified via configuration
+- Whole Word Matching: Utilizes whole-word boundary detection to avoid misclassifying similar substrings.
+  For example, "admin" will match "admin user" but will not flag "administrator" or "badminton."
+  Likewise, "damn" will trigger in "that's damn good" but not in "condemnation."
+- Detailed error messages that specify which list triggered the validation failure: the users receive context-aware
+  validation feedback, such as:
+    - The {field} contains the blacklisted word: "{term}"
+    - The {field} contains the profanity word: "{term}"
+- Built-in security logging with support for custom log channels
+- Simple integration with Laravel controllers, Livewire components, and forms
+- Zero dependencies beyond Laravel itself
+- Thoroughly tested with comprehensive test coverage
+- Optional Logging Support: You can pass a custom log channel to capture violations or auditing—for example, logging
+  under security—for maintainability or monitoring.
+
+Perfect for applications requiring content moderation, user registration systems, comment sections, or any
+user-generated content that needs protection against inappropriate language or system term abuse.
 
 ## Installation
 
