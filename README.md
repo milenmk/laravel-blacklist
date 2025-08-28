@@ -1,5 +1,32 @@
 # Laravel Blacklist
 
+<p style="display: flex; justify-content: center; gap: 8px;">
+    <a href="https://packagist.org/packages/milenmk/laravel-blacklist" target="_blank">
+        <img src="https://img.shields.io/packagist/v/milenmk/laravel-blacklist.svg?style=flat-square" alt="Latest Version on Packagist" />
+    </a>
+    <a href="https://packagist.org/packages/milenmk/laravel-blacklist" target="_blank">
+        <img src="https://img.shields.io/packagist/dt/milenmk/laravel-blacklist.svg?style=flat-square" alt="Total Downloads" />
+    </a>
+    <a href="https://github.com/milenmk/laravel-blacklist" target="_blank">
+        <img alt="GitHub User's stars" src="https://img.shields.io/github/stars/milenmk/laravel-blacklist">
+    </a>
+    <a href="https://laravel.com/docs" target="_blank">
+        <img src="https://img.shields.io/badge/Laravel-10.x-orange?style=flat-square&logo=laravel" alt="Laravel 10 Support" />
+    </a>
+    <a href="https://www.php.net" target="_blank">
+        <img src="https://img.shields.io/packagist/php-v/milenmk/laravel-blacklist?style=flat-square" alt="PHP Version Support" />
+    </a>
+    <a href="https://github.com/milenmk/laravel-blacklist/blob/develop/LICENSE.md" target="_blank">
+        <img src="https://img.shields.io/packagist/l/milenmk/laravel-blacklist.svg?style=flat-square" alt="License" />
+    </a>
+    <a href="https://github.com/milenmk/laravel-blacklist/issues" target="_blank">
+        <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square" alt="Contributions Welcome" />
+    </a>
+    <a href="https://www.patreon.com/c/LaravelAddonsbyMilen" target="_blank">
+        <img src="https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?style=flat-square" alt="Sponsor me" />
+    </a>
+</p>
+
 Laravel Blacklist: A robust content filtering solution for Laravel applications that provides comprehensive validation
 against unwanted user input. This package offers dual-layer protection with both system blacklist words (preventing
 username squatting and system impersonation) and profanity/offensive terms filtering.
@@ -187,6 +214,26 @@ This package uses whole word boundary matching to prevent false positives. For e
 
 This ensures that legitimate content isn't incorrectly flagged while still catching problematic terms.
 
+## Changelog
+
+Please see [CHANGELOG.md](CHANGELOG.md) for more information on what has changed recently.
+
+## Support My Work
+
+If this package saves you time, you can support ongoing development:  
+👉 [Become a Patron](https://www.patreon.com/c/LaravelAddonsbyMilen)
+
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+This package is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for more details.
+
+## Disclaimer
+
+This package is provided "as is", without warranty of any kind, express or implied, including but not limited to
+warranties of merchantability, fitness for a particular purpose, or noninfringement.
+
+The author(s) make no guarantees regarding the accuracy, reliability, or completeness of the code, and shall not be held
+liable for any damages or losses arising from its use.
+
+Please ensure you thoroughly test this package in your environment before deploying it to production.
+
