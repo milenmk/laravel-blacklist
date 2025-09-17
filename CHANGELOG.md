@@ -1,3 +1,14 @@
+## v1.3.0
+
+#### Published: 2025-09-17
+
+Added support for custom attribute names in blacklist error messages.
+
+- `checkFields()` method now accepts an optional `$attributes` array to map field names to human-readable labels.
+- Error messages use these attribute names instead of raw field keys, improving UX and consistency with Laravel
+  validation.
+- This allows seamless integration with Laravel's built-in validation attribute naming conventions.
+
 ## v1.2.2
 
 #### Published: 2025-08-29

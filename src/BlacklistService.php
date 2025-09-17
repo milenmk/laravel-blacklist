@@ -13,10 +13,11 @@ class BlacklistService
      * Check if any of the provided fields contain blacklisted terms.
      *
      * @param  array<string, string>  $fields  Associative array of field names and their values
+     * @param  array<string, string>  $attributes  Mapping of field names to human-readable attribute labels for error messages.
      * @param  string|null  $logChannel  The log channel to use for logging blacklist matches
      * @return array<string, string> Array of validation errors, empty if no blacklisted terms found
      */
-    public function checkFields(array $fields, ?string $logChannel = null): array
+    public function checkFields(array $fields, ?string $logChannel = null, array $attributes = []): array
     {
         $mode = Config::get('blacklist.mode', 'blacklist');
         $terms = $this->getTermsBasedOnMode($mode);
@@ -31,7 +32,10 @@ class BlacklistService
                 // Check for whole word match using word boundaries in regex
                 if (preg_match('/\b' . preg_quote($term, '/') . '\b/i', $fieldValue)) {
                     $listType = $this->getListTypeForTerm($term, $mode);
-                    $errors[$fieldName] = "The $fieldName contains a $listType word: $term";
+
+                    $label = $attributes[$fieldName] ?? $fieldName;
+
+                    $errors[$fieldName] = "The $label contains a $listType word: $term";
 
                     $this->logBlacklistMatch($fieldName, $term, $listType, $logChannel);
 

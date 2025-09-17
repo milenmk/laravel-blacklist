@@ -200,6 +200,37 @@ This package uses whole word boundary matching to prevent false positives. For e
 
 This ensures that legitimate content isn't incorrectly flagged while still catching problematic terms.
 
+### Enhanced Attribute Name Support (New)
+
+The checkFields() method now accepts an optional third parameter `$attributes` — an associative array mapping field
+names to human-readable labels:
+
+```php
+$attributes = [
+    'last_name' => 'Last Name',
+    'name' => 'Name',
+    'email' => 'Email Address',
+    // Add your fields here
+];
+
+$blacklistErrors = $this->blacklistService->checkFields($input, null, $attributes);
+```
+
+This enables error messages to display friendly field names instead of raw input keys. For example:
+
+```text
+The Last Name contains a blacklisted word: administrator
+```
+
+instead of
+
+```text
+The last_name contains a blacklisted word: administrator
+```
+
+This ensures your error messages remain clear and consistent with Laravel's native validation attribute naming
+conventions, improving user experience.
+
 ## Changelog
 
 Please see [CHANGELOG.md](CHANGELOG.md) for more information on what has changed recently.
