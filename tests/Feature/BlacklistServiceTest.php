@@ -6,7 +6,7 @@ namespace Milenmk\LaravelBlacklist\Tests\Feature;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
-use Milenmk\LaravelBlacklist\BlacklistService;
+use Milenmk\LaravelBlacklist\Services\BlacklistService;
 use Milenmk\LaravelBlacklist\Tests\BaseTest;
 use Mockery;
 use PHPUnit\Framework\Attributes\Test;

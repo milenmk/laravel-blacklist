@@ -383,4 +383,73 @@ return [
         'failure',
         'scumbag',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Whitelist
+    |--------------------------------------------------------------------------
+    |
+    | This array contains whitelisted words that should not be blacklisted when validating
+    | user input. These words can still appear in fields but won't trigger a validation error.
+    |
+    */
+    'whitelist' => [
+        // 'OpenAI',
+        // 'Laravel',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ignore patterns
+    |--------------------------------------------------------------------------
+    |
+    | This array contains regex patterns for ignoring certain words during validation.
+    | If any of these patterns match a word, it will be ignored and not considered as invalid.
+    |
+    */
+    'ignore_patterns' => [
+        // '/^foo.*bar$/i',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Advance matching strategies
+    |--------------------------------------------------------------------------
+    |
+    | This array contains advanced strategies for matching words against the blacklist.
+    | Each strategy has its own set of rules and conditions for determining if a word matches.
+    |
+    */
+    'lists' => [
+        'system' => [
+            'terms' => ['spam', 'scam'],
+            'matching' => 'exact',
+        ],
+
+        'profanity' => [
+            'terms' => ['badword'],
+            'matching' => 'fuzzy',
+            'threshold' => 2,
+        ],
+
+        'leetspeak' => [
+            'terms' => ['shit'],
+            'matching' => 'substitution',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Per-Field Rules & Contexts
+    |--------------------------------------------------------------------------
+    |
+    | This array allows you to define custom validation rules for specific fields.
+    | You can specify different modes, whitelist entries, ignore patterns, etc., on a per-field basis.
+    |
+    */
+    'contexts' => [
+        // 'username' => ['blacklist'],
+        // 'comment' => ['blacklist', 'profanity', 'leetspeak'],
+        // 'bio' => ['blacklist'],
+    ],
 ];

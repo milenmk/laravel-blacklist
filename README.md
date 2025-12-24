@@ -19,22 +19,21 @@ username squatting and system impersonation) and profanity/offensive terms filte
 
 ## Key features:
 
-- Intelligent word boundary matching to prevent false positives while catching problematic content
-- Flexible filtering modes: use system blacklist only, profanity filtering only, or both simultaneously
-- Customizable word lists that can be easily extended or modified via configuration
-- Whole Word Matching: Utilizes whole-word boundary detection to avoid misclassifying similar substrings.
-  For example, "admin" will match "admin user" but will not flag "administrator" or "badminton."
-  Likewise, "damn" will trigger in "that's damn good" but not in "condemnation."
-- Detailed error messages that specify which list triggered the validation failure: the users receive context-aware
-  validation feedback, such as:
-    - The {field} contains the blacklisted word: "{term}"
-    - The {field} contains the profanity word: "{term}"
-- Built-in security logging with support for custom log channels
-- Simple integration with Laravel controllers, Livewire components, and forms
-- Zero dependencies beyond Laravel itself
-- Thoroughly tested with comprehensive test coverage
-- Optional Logging Support: You can pass a custom log channel to capture violations or auditing—for example, logging
-  under security—for maintainability or monitoring.
+- **Intelligent Word Boundary Matching**: Prevents false positives while catching problematic content.
+- **Flexible Filtering Modes**: Use system blacklist only, profanity filtering only, or both simultaneously.
+- **Advanced Matching Strategies**:
+    - **Exact**: Whole word matching (default).
+    - **Fuzzy**: Catch typos using Levenshtein distance (e.g., "admin" matches "adm1n").
+    - **Substitution**: Catch "leet speak" substitutions (e.g., "h3ll0").
+- **Context-Aware Validation**: Define different validation rules for different fields (e.g., stricter rules for
+  usernames vs comments).
+- **Whitelist & Ignore Patterns**: Globally whitelist terms or use regex to ignore specific patterns.
+- **Customizable Word Lists**: Easily extend or modify lists via configuration.
+- **Detailed Error Messages**: Users receive context-aware validation feedback.
+- **Built-in Security Logging**: Support for custom log channels.
+- **Simple Integration**: Works with Laravel controllers, Livewire components, and forms.
+- **Zero Dependencies**: Lightweight and efficient.
+- **Optional Logging Support**: Pass a custom log channel to capture violations or auditing.
 
 Perfect for applications requiring content moderation, user registration systems, comment sections, or any
 user-generated content that needs protection against inappropriate language or system term abuse.
@@ -85,6 +84,30 @@ return [
         // Common profanity words
         // ...
     ],
+
+    // Whitelist words that should never be flagged
+    'whitelist' => [
+        'Laravel',
+    ],
+
+    // Regex patterns to ignore
+    'ignore_patterns' => [
+        '/^uuid-.*$/', 
+    ],
+
+    // Advanced matching strategies
+    'lists' => [
+        'custom_list' => [
+            'terms' => ['forbidden'],
+            'matching' => 'fuzzy', // Options: exact, fuzzy, substitution
+            'threshold' => 1,      // For fuzzy matching
+        ],
+    ],
+
+    // Per-field contexts
+    'contexts' => [
+        'username' => ['blacklist', 'custom_list'],
+    ],
 ];
 ```
 
@@ -93,7 +116,7 @@ return [
 #### Basic controller
 
 ```php
-use Milenmk\LaravelBlacklist\BlacklistService;
+use Milenmk\LaravelBlacklist\Services\BlacklistService;
 
 class YourController
 {
@@ -128,7 +151,7 @@ class YourController
 
 ```php
 use Livewire\Component;
-use Milenmk\LaravelBlacklist\BlacklistService;
+use Milenmk\LaravelBlacklist\Services\BlacklistService;
 
 class YourComponent extends Component
 {
@@ -145,7 +168,7 @@ class YourComponent extends Component
 
 ```php
 use Livewire\Form;
-use Milenmk\LaravelBlacklist\BlacklistService;
+use Milenmk\LaravelBlacklist\Services\BlacklistService;
 
 class YourForm extends Form
 {
@@ -161,6 +184,85 @@ class YourForm extends Form
 ```
 
 ## Advanced Usage
+
+### 1. Blacklist Validation Rule
+
+You can use the `BlacklistRule` in your form requests or validation logic.
+
+```php
+use Milenmk\LaravelBlacklist\Rules\BlacklistRule;
+
+// ...
+
+public function rules(): array
+{
+    return [
+        // Uses 'username' as the context (checks 'contexts.username' in config)
+        'username' => ['required', new BlacklistRule()],
+        
+        // Explicitly specify the context
+        'bio' => ['required', new BlacklistRule('strict_bio')],
+    ];
+}
+```
+
+### 2. Route Middleware
+
+Protect your routes using the `blacklist` middleware.
+
+```php
+// Protect a route using the 'comment' context
+Route::post('/comments', ...)->middleware('blacklist:comment');
+
+// If no context is provided, it uses the field names from the request as contexts
+Route::post('/profile', ...)->middleware('blacklist');
+```
+
+### 3. Whitelist and Ignore Patterns
+
+You can define global exceptions in your configuration file:
+
+- **Whitelist**: Exact words that should never be blocked (e.g., "Analyst").
+- **Ignore Patterns**: Regex patterns to ignore (e.g., ignoring UUIDs or specific codes).
+
+```php
+// config/blacklist.php
+'whitelist' => ['Analyst', 'Dickson'],
+'ignore_patterns' => ['/^TX-\d+$/'],
+```
+
+### 4. Advanced Matching Strategies
+
+You can define custom lists with specific matching strategies in `config/blacklist.php`:
+
+```php
+'lists' => [
+    'strict_list' => [
+        'terms' => ['forbidden'],
+        'matching' => 'exact',
+    ],
+    'typo_list' => [
+        'terms' => ['important'],
+        'matching' => 'fuzzy', // Uses Levenshtein distance
+        'threshold' => 1,      // Matches "1mportant"
+    ],
+    'leet_list' => [
+        'terms' => ['hacker'],
+        'matching' => 'substitution', // Matches "h4ck3r"
+    ],
+],
+```
+
+### 5. Context-Aware Validation
+
+Map different contexts (fields) to specific lists:
+
+```php
+'contexts' => [
+    'username' => ['blacklist', 'strict_list'],
+    'comment' => ['profanity', 'typo_list', 'leet_list'],
+],
+```
 
 ### Custom Log Channel
 

@@ -1,3 +1,11 @@
+## v1.4.0
+
+- [NEW] Blacklist rule for form validation
+- [NEW] Middleware for routes validation
+- [NEW] Whitelist and ignore list added to the config file.
+- [NEW] Advance matching strategies
+- [NEW] Per-Field Rules & Contexts
+
 ## v1.3.0
 
 #### Published: 2025-09-17

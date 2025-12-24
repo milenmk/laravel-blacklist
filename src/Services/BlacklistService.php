@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Milenmk\LaravelBlacklist;
+namespace Milenmk\LaravelBlacklist\Services;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Milenmk\LaravelBlacklist\DTO\BlacklistResult;
+use Milenmk\LaravelBlacklist\Matching\Matching;
 
 class BlacklistService
 {
@@ -46,6 +49,32 @@ class BlacklistService
         }
 
         return $errors;
+    }
+
+    public function checkValue(string $value, ?string $context = null): BlacklistResult
+    {
+        if ($this->isWhitelisted($value) || $this->isIgnored($value)) {
+            return BlacklistResult::clean();
+        }
+
+        $lists = config('blacklist.contexts.' . $context)
+            ?? array_keys(config('blacklist.lists'));
+
+        foreach ($lists as $listName) {
+            $list = config("blacklist.lists.$listName");
+
+            foreach ($list['terms'] as $term) {
+                if (Matching::match($term, $value, $list)) {
+                    return BlacklistResult::blocked(
+                        term: $term,
+                        list: $listName,
+                        context: $context
+                    );
+                }
+            }
+        }
+
+        return BlacklistResult::clean();
     }
 
     /**
@@ -110,5 +139,25 @@ class BlacklistService
         } else {
             Log::warning($message);
         }
+    }
+
+    protected function isWhitelisted(string $value): bool
+    {
+        return Str::contains(
+            $value,
+            config('blacklist.whitelist', []),
+            ignoreCase: true
+        );
+    }
+
+    protected function isIgnored(string $value): bool
+    {
+        foreach (config('blacklist.ignore_patterns', []) as $pattern) {
+            if (@preg_match($pattern, $value)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

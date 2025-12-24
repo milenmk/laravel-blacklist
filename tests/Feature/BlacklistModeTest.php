@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Milenmk\LaravelBlacklist\Tests\Feature;
 
 use Illuminate\Support\Facades\Config;
-use Milenmk\LaravelBlacklist\BlacklistService;
+use Milenmk\LaravelBlacklist\Services\BlacklistService;
 use Milenmk\LaravelBlacklist\Tests\BaseTest;
 use PHPUnit\Framework\Attributes\Test;
 
