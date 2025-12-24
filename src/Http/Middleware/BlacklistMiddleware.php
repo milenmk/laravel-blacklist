@@ -24,7 +24,12 @@ final class BlacklistMiddleware
             $result = $service->checkValue($value, $context);
 
             if (! $result->isClean()) {
-                abort(422, __('blacklist::validation.blocked'));
+                return response()->json([
+                    'message' => __('blacklist::validation.blocked', [
+                        'term' => $result->term(),
+                        'list' => $result->list(),
+                    ]),
+                ], 422);
             }
         }
 

@@ -7,6 +7,7 @@ namespace Milenmk\LaravelBlacklist\Services;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Milenmk\LaravelBlacklist\DTO\BlacklistResult;
 use Milenmk\LaravelBlacklist\Matching\Matching;
 
@@ -51,6 +52,9 @@ class BlacklistService
         return $errors;
     }
 
+    /**
+     * Scan a value against configured blacklist rules.
+     */
     public function checkValue(string $value, ?string $context = null): BlacklistResult
     {
         if ($this->isWhitelisted($value) || $this->isIgnored($value)) {
@@ -153,7 +157,18 @@ class BlacklistService
     protected function isIgnored(string $value): bool
     {
         foreach (config('blacklist.ignore_patterns', []) as $pattern) {
-            if (@preg_match($pattern, $value)) {
+            if (! is_string($pattern)) {
+                continue;
+            }
+
+            // Validate regex
+            if (@preg_match($pattern, '') === false) {
+                throw new InvalidArgumentException(
+                    "Invalid regex pattern in blacklist.ignore_patterns: {$pattern}"
+                );
+            }
+
+            if (preg_match($pattern, $value) === 1) {
                 return true;
             }
         }

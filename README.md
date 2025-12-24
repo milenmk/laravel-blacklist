@@ -40,76 +40,82 @@ user-generated content that needs protection against inappropriate language or s
 
 ## Installation
 
-You can install the package via composer:
+1. Install the package via composer:
 
-```copy
-composer require milenmk/laravel-blacklist
-```
+    ```copy
+    composer require milenmk/laravel-blacklist
+    ```
 
-## Configuration
+2. Publish the configuration file
 
-The package works out of the box with default settings, but you can customize it by publishing the config file:
+   The package works out of the box with default settings, but you can customize it by publishing the config file:
 
-```copy
-php artisan vendor:publish --tag=blacklist-config
-```
+    ```copy
+    php artisan vendor:publish --tag=blacklist-config
+    ```
 
-This will create a `config/blacklist.php` file where you can:
+   This will create a `config/blacklist.php` file where you can:
 
-1. Choose which word lists to use (system blacklist, profanity, or both)
-2. Customize the blacklisted terms in each list
+    1. Choose which word lists to use (system blacklist, profanity, or both)
+    2. Customize the blacklisted terms in each list
 
-> **Note:** If you don't publish the config file, the package will use the default configuration with the 'blacklist'
-> mode enabled.
+   > **Note:** If you don't publish the config file, the package will use the default configuration with the 'blacklist'
+   > mode enabled.
+
+3. Publish the package language file
+
+    ```php
+    php artisan vendor:publish --tag=blacklist-translations
+    ```
 
 ### Configuration Options
 
 The package provides three modes for filtering content:
 
-```php
-// config/blacklist.php
-return [
-    // Choose which lists to use: 'blacklist', 'profanity', or 'both'
-    'mode' => 'blacklist',
-    
-    // System blacklist words (usernames, reserved terms, etc.)
-    'blacklist' => [
-        'admin',
-        'system',
-        // ...
-    ],
-    
-    // Profanity and offensive terms
-    'profanity' => [
-        // Common profanity words
-        // ...
-    ],
-
-    // Whitelist words that should never be flagged
-    'whitelist' => [
-        'Laravel',
-    ],
-
-    // Regex patterns to ignore
-    'ignore_patterns' => [
-        '/^uuid-.*$/', 
-    ],
-
-    // Advanced matching strategies
-    'lists' => [
-        'custom_list' => [
-            'terms' => ['forbidden'],
-            'matching' => 'fuzzy', // Options: exact, fuzzy, substitution
-            'threshold' => 1,      // For fuzzy matching
+    ```php
+    // config/blacklist.php
+    return [
+        // Choose which lists to use: 'blacklist', 'profanity', or 'both'
+        'mode' => 'blacklist',
+        
+        // System blacklist words (usernames, reserved terms, etc.)
+        'blacklist' => [
+            'admin',
+            'system',
+            // ...
         ],
-    ],
-
-    // Per-field contexts
-    'contexts' => [
-        'username' => ['blacklist', 'custom_list'],
-    ],
-];
-```
+        
+        // Profanity and offensive terms
+        'profanity' => [
+            // Common profanity words
+            // ...
+        ],
+    
+        // Whitelist words that should never be flagged
+        'whitelist' => [
+            'Laravel',
+        ],
+    
+        // Regex patterns to ignore
+        'ignore_patterns' => [
+            '/^uuid-.*$/', 
+        ],
+    
+        // Advanced matching strategies
+        'lists' => [
+            'custom_list' => [
+                'terms' => ['forbidden'],
+                'matching' => 'fuzzy', // Options: exact, fuzzy, substitution
+                'threshold' => 1,      // For fuzzy matching
+            ],
+        ],
+    
+        // Per-field contexts
+        'contexts' => [
+            'username' => ['blacklist', 'custom_list'],
+        ],
+    ];
+    ```
 
 ## Usage
 

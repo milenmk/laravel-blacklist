@@ -1,10 +1,24 @@
 ## v1.4.0
 
-- [NEW] Blacklist rule for form validation
-- [NEW] Middleware for routes validation
-- [NEW] Whitelist and ignore list added to the config file.
-- [NEW] Advance matching strategies
-- [NEW] Per-Field Rules & Contexts
+### New Features
+
+- **Validation Rule:** `BlacklistRule` enables direct Laravel validation integration (FormRequest or `validator()`).
+- **Route Middleware:** `blacklist` middleware can be applied to routes for automatic request input scanning.
+- **Whitelist Support:** Add specific terms that should never be flagged, regardless of other rules.
+- **Ignore Patterns:** Use regex patterns to skip validation for certain inputs or formats.
+- **Advanced Matching Strategies:**
+    - **exact** (default): whole-word boundary matching
+    - **fuzzy**: fuzzy matching using Levenshtein for typo tolerance
+    - **substitution**: leetspeak/character substitution matching
+- **Per-Field Context Rules:** Configure which strategies/lists apply per input field.
+- **New Result Object:** `BlacklistResult` returned by `checkValue()` with term, list, and context introspection.
+- **Expanded Tests:** Matching strategies and contextual validation are covered in tests.
+
+### Improvements
+
+- Refactored `BlacklistService` to return structured results.
+- Config namespace restructured for clarity (`whitelist`, `ignore_patterns`, `lists`, `contexts`).
+- Improved README with examples for validation rule and middleware.
 
 ## v1.3.0
 

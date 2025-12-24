@@ -18,6 +18,8 @@ return [
 
     'mode' => 'blacklist', // Options: 'blacklist', 'profanity', 'both'
 
+    'default_matching' => 'exact', // Options: 'exact', 'fuzzy', 'substitution'
+
     /*
     |--------------------------------------------------------------------------
     | System Blacklist
@@ -421,7 +423,7 @@ return [
     |
     */
     'lists' => [
-        'system' => [
+        'blacklist' => [
             'terms' => ['spam', 'scam'],
             'matching' => 'exact',
         ],

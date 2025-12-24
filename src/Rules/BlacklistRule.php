@@ -28,6 +28,7 @@ final class BlacklistRule implements ValidationRule
 
         if (! $result->isClean()) {
             $fail(__('blacklist::validation.blocked', [
+                'attribute' => $attribute,
                 'term' => $result->term(),
                 'list' => $result->list(),
             ]));

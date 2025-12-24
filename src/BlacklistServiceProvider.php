@@ -37,5 +37,14 @@ class BlacklistServiceProvider extends ServiceProvider
             'blacklist',
             BlacklistMiddleware::class
         );
+
+        $this->loadTranslationsFrom(
+            __DIR__ . '/../lang',
+            'blacklist'
+        );
+
+        $this->publishes([
+            __DIR__ . '/../lang' => $this->app->langPath('vendor/blacklist'),
+        ], 'blacklist-translations');
     }
 }

@@ -8,8 +8,15 @@ final class Matching
 {
     public static function match(string $term, string $value, array $config): bool
     {
-        return match ($config['matching'] ?? 'exact') {
-            'fuzzy' => self::fuzzy($term, $value, $config['threshold'] ?? 1),
+        $strategy = $config['matching']
+            ?? config('blacklist.default_matching', 'exact');
+
+        return match ($strategy) {
+            'fuzzy' => self::fuzzy(
+                $term,
+                $value,
+                (int) ($config['threshold'] ?? 1)
+            ),
             'substitution' => self::substitution($term, $value),
             default => self::exact($term, $value),
         };
