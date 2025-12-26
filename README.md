@@ -72,50 +72,50 @@ user-generated content that needs protection against inappropriate language or s
 
 The package provides three modes for filtering content:
 
-    ```php
-    // config/blacklist.php
-    return [
-        // Choose which lists to use: 'blacklist', 'profanity', or 'both'
-        'mode' => 'blacklist',
-        
-        // System blacklist words (usernames, reserved terms, etc.)
-        'blacklist' => [
-            'admin',
-            'system',
-            // ...
-        ],
-        
-        // Profanity and offensive terms
-        'profanity' => [
-            // Common profanity words
-            // ...
-        ],
+```php
+// config/blacklist.php
+return [
+    // Choose which lists to use: 'blacklist', 'profanity', or 'both'
+    'mode' => 'blacklist',
     
-        // Whitelist words that should never be flagged
-        'whitelist' => [
-            'Laravel',
-        ],
+    // System blacklist words (usernames, reserved terms, etc.)
+    'blacklist' => [
+        'admin',
+        'system',
+        // ...
+    ],
     
-        // Regex patterns to ignore
-        'ignore_patterns' => [
-            '/^uuid-.*$/', 
+    // Profanity and offensive terms
+    'profanity' => [
+        // Common profanity words
+        // ...
+    ],
+
+    // Whitelist words that should never be flagged
+    'whitelist' => [
+        'Laravel',
+    ],
+
+    // Regex patterns to ignore
+    'ignore_patterns' => [
+        '/^uuid-.*$/', 
+    ],
+
+    // Advanced matching strategies
+    'lists' => [
+        'custom_list' => [
+            'terms' => ['forbidden'],
+            'matching' => 'fuzzy', // Options: exact, fuzzy, substitution
+            'threshold' => 1,      // For fuzzy matching
         ],
-    
-        // Advanced matching strategies
-        'lists' => [
-            'custom_list' => [
-                'terms' => ['forbidden'],
-                'matching' => 'fuzzy', // Options: exact, fuzzy, substitution
-                'threshold' => 1,      // For fuzzy matching
-            ],
-        ],
-    
-        // Per-field contexts
-        'contexts' => [
-            'username' => ['blacklist', 'custom_list'],
-        ],
-    ];
-    ```
+    ],
+
+    // Per-field contexts
+    'contexts' => [
+        'username' => ['blacklist', 'custom_list'],
+    ],
+];
+```
 
 ## Usage
 
