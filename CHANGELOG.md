@@ -1,3 +1,9 @@
+## v1.5.0
+
+#### Published: 2025-05-24
+
+- [IMPROVEMENT] Add support for Laravel 13.x
+
 ## v1.4.0
 
 ### New Features
